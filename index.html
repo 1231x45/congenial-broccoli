@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0b0d">
+  <title>BarCode — Generador y lector</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#"><span class="brand-mark">▥</span> barcode<span class="brand-dot">.</span></a>
+    <span class="top-note">GENERADOR · LECTOR</span>
+  </header>
+
+  <main class="shell">
+    <section class="hero">
+      <p class="eyebrow">SISTEMA GRATUITO DE CÓDIGOS</p>
+      <h1>Un código.<br><span mil>Una identidad.</span></h1>
+      <p class="sub">Crea códigos de barras, escanéalos con tu cámara y consulta su identificador al instante.</p>
+    </section>
+
+    <nav class="tabs" aria-label="Secciones">
+      <button class="tab active" data-tab="generate">Generador</button>
+      <button class="tab" data-tab="scan">Escáner</button>
+      <button class="tab" data-tab="history">Historial <span id="historyCount" class="count">0</span></button>
+    </nav>
+
+    <section id="generate" class="panel active">
+      <div class="panel-head"><div><p class="eyebrow">01 / CREAR</p><h2>Genera tu código</h2></div><span class="pill">GRATIS</span></div>
+      <label for="barcodeValue">Número o identificador</label>
+      <div class="input-row">
+        <input id="barcodeValue" type="text" placeholder="Ej. 7501234567890" autocomplete="off" value="123456789012">
+        <button id="generateBtn" class="primary">Generar</button>
+      </div>
+      <div class="options">
+        <div><label for="format">Formato</label><select id="format"><option value="CODE128">CODE 128 — letras y números</option><option value="EAN13">EAN-13 — producto comercial</option><option value="EAN8">EAN-8 — producto compacto</option><option value="CODE39">CODE 39 — alfanumérico</option></select></div>
+        <div><label for="displayValue">Mostrar número</label><select id="displayValue"><option value="true">Sí</option><option value="false">No</option></select></div>
+      </div>
+      <div class="barcode-stage"><svg id="barcode"></svg><p id="barcodePlaceholder">Tu código aparecerá aquí.</p></div>
+      <p id="generateMessage" class="message" role="status">Escribe un valor y pulsa Generar.</p>
+      <div class="actions"><button id="downloadPng" class="secondary" disabled>Descargar PNG</button><button id="downloadSvg" class="secondary" disabled>Descargar SVG</button><button id="copyGenerated" class="ghost" disabled>Copiar ID</button></div>
+      <p class="hint">EAN-13 requiere 12 o 13 dígitos; EAN-8 requiere 7 u 8. CODE 128 acepta letras y números.</p>
+    </section>
+
+    <section id="scan" class="panel">
+      <div class="panel-head"><div><p class="eyebrow">02 / DETECTAR</p><h2>Escanea un código</h2></div><span class="pill">CÁMARA</span></div>
+      <div class="camera-box">
+        <video id="video" playsinline muted></video>
+        <div id="cameraPlaceholder" class="camera-placeholder"><span class="camera-icon">▣</span><strong>Tu cámara aparecerá aquí</strong><small>Permite el acceso cuando el navegador lo solicite.</small></div>
+        <div class="scan-frame"></div>
+      </div>
+      <div class="actions camera-actions"><button id="startScan" class="primary">Activar cámara</button><button id="stopScan" class="secondary" disabled>Detener</button></div>
+      <p id="scanMessage" class="message" role="status">La lectura usa la capacidad de escaneo integrada del navegador.</p>
+      <div class="result-box"><div><span class="eyebrow">ID DETECTADO</span><strong id="scanResult">Aún no hay lectura</strong><small id="scanFormat">—</small></div><button id="copyScan" class="secondary" disabled>Copiar</button></div>
+      <div class="manual"><label for="manualValue">¿No puedes usar la cámara? Introduce el código manualmente</label><div class="input-row"><input id="manualValue" placeholder="Escribe el número o ID"><button id="manualAdd" class="secondary">Guardar</button></div></div>
+      <p class="hint">La cámara requiere HTTPS o localhost y permiso del navegador. La detección depende de que tu navegador admita BarcodeDetector.</p>
+    </section>
+
+    <section id="history" class="panel">
+      <div class="panel-head"><div><p class="eyebrow">03 / REGISTROS</p><h2>Historial</h2></div><button id="clearHistory" class="ghost danger">Borrar todo</button></div>
+      <div id="historyList" class="history-list"><div class="empty">Todavía no hay códigos guardados.</div></div>
+      <p class="hint">Los registros se guardan localmente en este dispositivo. No se envían a ningún servidor.</p>
+    </section>
+    <footer><span>BARCODE / 2026</span><span>HECHO PARA USO PERSONAL</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
